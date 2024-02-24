@@ -85,12 +85,7 @@ $(() => {
 
     $('form#dest-data-form').on('submit', (event) => {
         event.preventDefault()
-        if (
-            !latitude ||
-            !longitude ||
-            !apiGoogleMunicipio ||
-            !apiGoogleProvincia
-        ) {
+        if (!latitude || !longitude) {
             showAlert()
         } else {
             let jsonData = {}
@@ -108,27 +103,34 @@ $(() => {
             jsonData['longitud'] = longitude.toString()
 
             let sended = false
-            if (
-                cleanString(provinceText).trim().toLowerCase() ===
-                cleanString(apiGoogleProvincia).trim().toLowerCase()
-            ) {
+            if (apiGoogleMunicipio && apiGoogleProvincia) {
                 if (
-                    !cleanString(municipalityText)
-                        .trim()
-                        .toLowerCase()
-                        .includes('isla')
+                    cleanString(provinceText).trim().toLowerCase() ===
+                    cleanString(apiGoogleProvincia).trim().toLowerCase()
                 ) {
                     if (
-                        cleanString(municipalityText).trim().toLowerCase() ===
-                        cleanString(apiGoogleMunicipio).trim().toLowerCase()
+                        !cleanString(municipalityText)
+                            .trim()
+                            .toLowerCase()
+                            .includes('isla')
                     ) {
+                        if (
+                            cleanString(municipalityText)
+                                .trim()
+                                .toLowerCase() ===
+                            cleanString(apiGoogleMunicipio).trim().toLowerCase()
+                        ) {
+                            sended = true
+                            submitForm(jsonData)
+                        }
+                    } else {
                         sended = true
                         submitForm(jsonData)
                     }
-                } else {
-                    sended = true
-                    submitForm(jsonData)
                 }
+            } else {
+                sended = true
+                submitForm(jsonData)
             }
             if (!sended) $('#noEqualData').removeAttr('style')
         }
