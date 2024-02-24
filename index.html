@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Destinatario RY</title>
-    <!-- Enlaza el archivo CSS de Bootstrap 5 -->
+
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -28,13 +28,40 @@
   <body>
     <div class="container mt-5 px-3">
       <div class="alert alert-warning my-3" role="alert">
-        Asegúrese de tener activo el servicio de Ubicación de su dispositivo
+        <strong>¡Atención!</strong> Solo llene estos campos cuando se encuentre
+        en su casa, de lo contrario se almacenarán coordenadas erróneas y no se
+        le podrá entregar el envío correctamente.
       </div>
-      <form>
-        <!-- Campo: Nombre -->
+      <div class="alert alert-warning my-3" role="alert">
+        <strong>¡Atención!</strong> Asegúrese de tener activo el servicio de
+        Ubicación de su dispositivo, y permitirle a la web acceder a este.
+      </div>
+      <div
+        class="alert alert-warning my-3 alert-dismissible"
+        style="display: none"
+        role="alert"
+        id="noMobileDevice"
+      >
+        <strong>¡Atención!</strong> Por favor, para obtener una ubicación más
+        precisa, acceda desde un dispositivo móvil.
+      </div>
+      <div
+        class="alert alert-danger my-3 alert-dismissible"
+        style="display: none"
+        role="alert"
+        id="noEqualData"
+      >
+        La ubicación de sus coordenadas no coincide con los datos
+        Provincia/Municipio especificados. Chequee la Provincia/Municipio
+        seleccionados e
+        <button class="btn btn-light noCoorsBtn">inténtelo</button>
+        nuevamente.
+      </div>
+      <form id="dest-data-form" autocomplete="off">
         <div class="mb-3">
           <label for="nombre" class="form-label">Nombre</label>
           <input
+            name="nombre"
             type="text"
             class="form-control"
             id="nombre"
@@ -43,10 +70,10 @@
           />
         </div>
 
-        <!-- Campo: Apellidos -->
         <div class="mb-3">
           <label for="apellidos" class="form-label">Apellidos</label>
           <input
+            name="apellidos"
             type="text"
             class="form-control"
             id="apellidos"
@@ -55,10 +82,10 @@
           />
         </div>
 
-        <!-- Campo: CI -->
         <div class="mb-3">
           <label for="ci" class="form-label">CI</label>
           <input
+            name="ci"
             type="text"
             class="form-control"
             id="ci"
@@ -67,32 +94,55 @@
           />
         </div>
 
-        <!-- Campo: Provincia (select) -->
         <div class="mb-3">
           <label for="provincia" class="form-label">Provincia</label>
-          <select class="form-select" id="provincia-select" required></select>
+          <select
+            class="form-select"
+            id="provincia-select"
+            required
+            name="provincia"
+          ></select>
         </div>
 
-        <!-- Campo: Municipio (select) -->
         <div class="mb-3">
           <label for="municipio" class="form-label">Municipio</label>
-          <select class="form-select" id="municipio-select" disabled></select>
+          <select
+            class="form-select"
+            id="municipio-select"
+            disabled
+            name="municipio"
+          ></select>
         </div>
 
-        <!-- Botón de envío -->
         <div class="d-flex justify-content-center">
           <button type="submit" class="btn btn-primary">
             <i class="fa fa-paper-plane fa-fw"></i> Enviar
           </button>
         </div>
+
+        <div id="user-latlng" class="my-3 text-center"></div>
       </form>
+
+      <!-- <div class="row">
+        <div class="col-12"> -->
+      <div
+        id="emptyLatLong"
+        class="alert alert-danger alert-dismissible fade"
+        role="alert"
+      >
+        <strong>¡Atención!</strong> No se han podido obtener sus coordenadas.
+        <button class="btn btn-light noCoorsBtn">Inténtelo</button>
+        nuevamente.
+      </div>
+      <!-- </div>
+      </div> -->
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/es.min.js"></script>
-    <!-- Enlaza los archivos JS de Bootstrap 5 (opcional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/6.0.0/bootbox.min.js"></script>
     <script src="./src/assets/js/index.js"></script>
   </body>
 </html>
